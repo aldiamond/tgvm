@@ -17,13 +17,13 @@ curl https://raw.githubusercontent.com/aldiamond/tgvm/main/setup | bash
 ### Usage
 
 ```
->tgvm --help
-
+> tgvm --help
+ 
 Simple Linux terragrunt version manager.
  
 Usage:
-    tfvm version                display current running version of terragrunt
-    tfvm list                   list installed versions of terragrunt
-    tfvm install {{version}}    install terragrunt version
-    tfvm set {{version}}        set terragrunt version
+    tgvm version                display current running version of terragrunt
+    tgvm list                   list installed versions of terragrunt
+    tgvm install {{version}}    install terragrunt version
+    tgvm set {{version}}        set terragrunt version
 ```

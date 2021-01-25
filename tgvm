@@ -21,7 +21,7 @@ tgvm_install() {
         echo "Terragrunt version $version already installed."
     else
         pushd /tmp > /dev/null
-        curl -O https://github.com/gruntwork-io/terragrunt/releases/download/v${version}/terragrunt_linux_amd64
+        curl -LO https://github.com/gruntwork-io/terragrunt/releases/download/v${version}/terragrunt_linux_amd64
         mv ./terragrunt_linux_amd64 $HOME/.terragrunts/terragrunt-${version}
         chmod +x $HOME/.terragrunts/terragrunt-${version}
         rm -rf ./terragrunt_$1_linux_amd64.zip

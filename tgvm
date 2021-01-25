@@ -2,7 +2,7 @@
 
 set -e
 
-installDir=$HOME/.terraforms
+installDir=$HOME/.terragrunts
 
 tgvm_version() {
     terragrunt --version

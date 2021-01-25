@@ -1,0 +1,74 @@
+#!/bin/bash
+
+set -e
+
+installDir=$HOME/.terraforms
+
+tgvm_version() {
+    terragrunt --version
+}
+
+tgvm_list() {
+    pushd $installDir > /dev/null
+    ls . | sed 's/terragrunt-//g'
+    popd > /dev/null
+}
+
+tgvm_install() {
+    version=$1
+    echo "Installing Terragrunt $version"
+    if [ -f "$installDir/terragrunt-$version" ]; then
+        echo "Terragrunt version $version already installed."
+    else
+        pushd /tmp > /dev/null
+        curl -O https://github.com/gruntwork-io/terragrunt/releases/download/v${version}/terragrunt_linux_amd64
+        mv ./terragrunt_linux_amd64 $HOME/.terragrunts/terragrunt-${version}
+        chmod +x $HOME/.terragrunts/terragrunt-${version}
+        rm -rf ./terragrunt_$1_linux_amd64.zip
+        rm -rf ./terragrunt-${version}
+        popd
+        echo "Done"
+    fi
+    echo "Run the following command to set the version to $version"
+    echo " "
+    echo "tgvm set $version"
+    echo " "
+}
+
+tgvm_set() {
+    version=$1
+    if [ -f "$HOME/bin/terragrunt" ]; then
+        rm $HOME/bin/terragrunt
+    fi
+    ln -s $HOME/.terragrunts/terragrunt-${version} $HOME/bin/terragrunt
+    terragrunt --version
+}
+
+tgvm_help() {
+    echo " "
+    echo "Simple Linux terragrunt version manager."
+    echo " "
+    echo "Usage:"
+    echo "    tgvm version                display current running version of terragrunt"
+    echo "    tgvm list                   list installed versions of terragrunt"
+    echo "    tgvm install {{version}}    install terragrunt version"
+    echo "    tgvm set {{version}}        set terragrunt version"
+}
+
+case "$1" in
+    version)
+        tgvm_version
+        ;;
+    list)
+        tgvm_list
+        ;;
+    install)
+        tgvm_install "$2"
+        ;;
+    set)
+        tgvm_set "$2"
+        ;;
+    *)
+        tgvm_help
+        ;;
+esac

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+echo "Installing tgvm..."
+
+if [ ! -d $HOME/.terragrunts ]; then
+    mkdir $HOME/.terragrunts
+fi
+
+if [ ! -d $HOME/bin ]; then
+    mkdir $HOME/bin
+fi
+
+if [ -f $HOME/bin/tgvm ]; then
+    rm $HOME/bin/tgvm
+fi
+
+pushd $HOME/bin > /dev/null
+curl -O https://raw.githubusercontent.com/aldiamond/tgvm/main/tgvm
+chmod +x ./tgvm
+popd > /dev/null
+
+echo "Done."
+echo "Make sure $HOME/bin is on your path."

@@ -1,5 +1,5 @@
 # tgvm
-A simple terragrunt version manager for Linux.
+A simple terragrunt version manager for Linux and Mac OS (Darwin).
 
 All bash. Does not required elivated privileges. Just make sure `$HOME/bin` is on your path.
 

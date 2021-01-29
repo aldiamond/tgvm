@@ -16,15 +16,21 @@ tgvm_list() {
 
 tgvm_install() {
     version=$1
-    echo "Installing Terragrunt $version"
+    OS=$(uname -a | awk '{print tolower($1)}')
+    ARCH=$(uname -m)
+    if [ $ARCH == 'x86_64' ]; then
+        ARCH='amd64'
+    fi
+    echo "Installing Terragrunt: ${version}_${OS}_${ARCH}"
     if [ -f "$installDir/terragrunt-$version" ]; then
         echo "Terragrunt version $version already installed."
     else
         pushd /tmp > /dev/null
-        curl -LO https://github.com/gruntwork-io/terragrunt/releases/download/v${version}/terragrunt_linux_amd64
-        mv ./terragrunt_linux_amd64 $HOME/.terragrunts/terragrunt-${version}
+        terragrunt="terragrunt_${OS}_${ARCH}"
+        curl -LO https://github.com/gruntwork-io/terragrunt/releases/download/v${version}/${terragrunt}
+        mv ./${terragrunt} $HOME/.terragrunts/terragrunt-${version}
         chmod +x $HOME/.terragrunts/terragrunt-${version}
-        rm -rf ./terragrunt_$1_linux_amd64.zip
+        rm -rf ./terragrunt_${version}_${OS}_${ARCH}.zip
         rm -rf ./terragrunt-${version}
         popd
         echo "Done"
